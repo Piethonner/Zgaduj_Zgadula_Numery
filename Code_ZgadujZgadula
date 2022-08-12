@@ -1,0 +1,42 @@
+import random
+import ascii
+
+#PC picks a number
+num_to_guess = random.randint(1,100)
+
+#Hello messages
+#print(num_to_guess) #bugfix/testing code
+print(ascii.logo)
+print("Witaj w grze 1-100!")
+if input("Wybierz poziom trudności. Wpisz 'normalny' lub 'trudny': ") == "normalny":
+    lives = 11
+else:
+    lives = 6
+#decreasing lives
+def decrease_lives():
+    global lives
+    lives -= 1
+
+def guessing():
+    decrease_lives()
+    print(f"Masz {lives} żyć. Powodzenia!")
+    answer = int(input("Podaj liczbę: "))
+    while answer is not num_to_guess:
+        if lives == 0:
+            print(f"Przegrywasz! Trzeba było wpisać {num_to_guess}...")
+            return
+        elif answer > num_to_guess and lives >= 1:
+            decrease_lives()
+            if lives > 1:
+                answer = int(input(f"Numer jest niższy.\nLiczba żyć: {lives}.\nSpróbuj ponownie: "))    
+            elif lives == 1:
+                answer = int(input("Numer jest niższy!\nMasz ostatnią szansę: "))
+        elif answer < num_to_guess and lives >= 1:
+            decrease_lives()
+            if lives > 1:
+                answer = int(input(f"Numer jest wyższy.\nLiczba żyć: {lives}.\nSpróbuj ponownie: "))
+            elif lives == 1:
+                answer = int(input("Numer jest wyższy!\nMasz ostatnią szansę: "))
+    print(f"Gratulacje! {num_to_guess} to Twój szczęśliwy numer :)")
+
+guessing()
